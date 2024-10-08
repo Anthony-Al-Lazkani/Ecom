@@ -1,8 +1,9 @@
 import "./Signup.css";
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { EmailContext } from "../../context/emailContext";
 
 const Signup = () => {
   // use States for credentials to save them in the DB
@@ -10,6 +11,8 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // get the setEmail Variable from EmailContext
+  const { setEmailContext } = useContext(EmailContext);
 
   // This is specifically used for password visibility
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -32,24 +35,54 @@ const Signup = () => {
   }
 
   // Registration API Fetch using axios
-  function handleRegistration(e) {
+  async function handleRegistration(e) {
     e.preventDefault();
-    if (passwordCheck(password, confirmPassword)) {
-      axios
-        .post("http://localhost:4000/user/auth/register", {
+
+    // Check if passwords match
+    if (!passwordCheck(password, confirmPassword)) {
+      window.alert("Passwords don't match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/user/auth/register",
+        {
           username,
           email,
           password,
-        })
-        .then((result) => {
-          console.log(result);
-          navigate("/verification");
-          setTimeout(() => {
-            window.alert(`Thank You ${username} for joining the Ecom Team !`);
-          }, 1500); // 2000 milliseconds = 2 seconds
-        });
-    } else {
-      window.alert("Passwords doesn't match");
+        }
+      );
+
+      // If the request is successful, handle the response
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.message);
+      window.alert(response.data.message); // Show success message
+      setEmailContext(email);
+      navigate("/verification");
+    } catch (error) {
+      // Error handling
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+
+        // Use the message from the server if it exists
+        window.alert(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Request data:", error.request);
+        window.alert("No response received from the server.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", error.message);
+        window.alert("Error in registration. Please try again.");
+      }
     }
   }
   return (
