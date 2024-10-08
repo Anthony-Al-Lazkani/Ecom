@@ -1,118 +1,117 @@
 .loginContainer {
-    height: 100vh;
-    width: 100%;
-    background-image: url("../../../public/SignupBackground.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .loginBox {
-    height: 400px;
-    width: 50%;
-    border-radius: 20px;
-    background: transparent;
-    backdrop-filter: blur(5px);
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    overflow: hidden;
-    transition: 0.5s;
-  }
-  
-  .loginBox:hover {
-    box-shadow: 1px 1px 2px 1px black;
-  }
-  
-  .loginleftPart {
-    background-color: lightskyblue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .loginleftPart h1 {
-    color: lightskyblue;
-  }
-  
-  .loginleftPart h4 {
-    font-style: italic;
-  }
-  
-  .loginrightPart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-  }
-  
-  .logininputContainer {
-    width: 80%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .logininputBox {
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    position: relative;
-  }
-  
-  .logininputBox input {
-    position: relative;
-    height: 35px;
-    width: 60%;
-    border: none;
-    outline: none;
-    border-radius: 6px;
-    padding: 10px;
-    transition: 0.5s;
-  }
-  
-  .logininputBox input:focus {
-    width: 62%;
-  }
-  
-  .eyeIcon {
-    position: absolute;
-    right: 22%;
-    color: lightskyblue;
-  }
-  
-  .logininputContainer button {
-    height: 35px;
-    width: 100px;
-    transition: 0.5s;
-    border: none;
-    border-radius: 8px;
-  }
-  
-  .logininputContainer button:hover {
-    background-color: lightskyblue;
-    color: white;
-  }
-  
-  .logininputContainer span { 
-    font-style: oblique;
-    font-size: 11px;
-  }
-  
-  .logininputContainer span a {
-    color: white;
-    transition: .5s;
-  }
-  
-  .logininputContainer span a:hover {
-    padding-left: 5px;
-  }
-  
+  height: 100vh;
+  width: 100%;
+  background-image: url("../../../public/SignupBackground.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBox {
+  height: 400px;
+  width: 50%;
+  border-radius: 20px;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.loginBox:hover {
+  box-shadow: 1px 1px 2px 1px black;
+}
+
+.loginleftPart {
+  background-color: lightskyblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginleftPart h1 {
+  color: lightskyblue;
+}
+
+.loginleftPart h4 {
+  font-style: italic;
+}
+
+.loginrightPart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.logininputContainer {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.logininputBox {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.logininputBox input {
+  position: relative;
+  height: 35px;
+  width: 60%;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 10px;
+  transition: 0.5s;
+}
+
+.logininputBox input:focus {
+  width: 62%;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 22%;
+  color: lightskyblue;
+}
+
+.logininputContainer button {
+  height: 35px;
+  width: 100px;
+  transition: 0.5s;
+  border: none;
+  border-radius: 8px;
+}
+
+.logininputContainer button:hover {
+  background-color: lightskyblue;
+  color: white;
+}
+
+.logininputContainer span {
+  font-style: oblique;
+  font-size: 11px;
+}
+
+.logininputContainer span a {
+  color: white;
+  transition: 0.5s;
+}
+
+.logininputContainer span a:hover {
+  padding-left: 5px;
+}

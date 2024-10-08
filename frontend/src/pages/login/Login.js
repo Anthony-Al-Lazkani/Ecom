@@ -6,7 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   // use States for credentials to save them in the DB
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // This is specifically used for password visibility
@@ -20,21 +20,38 @@ const Login = () => {
   }
 
   // Login API Fetch using axios
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    axios
-      .post("http://localhost:4000/user/auth/login", { username, password })
-      .then((response) => {
-        console.log(response);
-        window.alert(response.data.message);
-        navigate("/");
-        setTimeout(() => {
-          window.alert(`Welcome back ${username} !`);
-        }, 1500); // 2000 milliseconds = 2 seconds
-      })
-      .catch((error) => {
-        window.alert(error.response.data.message);
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/user/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      window.alert(response.data.message);
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        window.alert(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Request data:", error.request);
+        window.alert("No response received from the server.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", error.message);
+        window.alert("Error in OTP verification. Please try again.");
+      }
+    }
   }
 
   return (
@@ -45,9 +62,9 @@ const Login = () => {
             <div className="logininputBox">
               <input
                 type="text"
-                placeholder="Username Or Email"
+                placeholder=" Email"
                 onChange={(e) => {
-                  setUsername(e.target.value);
+                  setEmail(e.target.value);
                 }}
               />
             </div>
@@ -70,6 +87,9 @@ const Login = () => {
             </div>
             <span>
               Don't have an account ? <Link to="/signup">Register</Link>
+            </span>
+            <span>
+              Forgot Password ? <Link to="/resetpasswordrequest">Reset</Link>
             </span>
 
             <button type="submit">Login</button>

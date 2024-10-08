@@ -6,6 +6,7 @@ const User = require("../../models/userModel");
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const userOTPVerification = require("../../models/userOTPVerificationModel");
+const resetPassword = require("../../models/resetPasswordModel");
 
 // function that generates OTP
 function generateOtp() {
@@ -43,7 +44,7 @@ const sendOTPVerification = async (email, otp) => {
       <div style="text-align: center; margin: 40px 0;">
         <span style="font-size: 24px; font-weight: bold; color: #333; letter-spacing: 2px; padding: 15px 30px; border-radius: 50px; background-color: #f7f7f7; border: 2px solid #4CAF50; display: inline-block;">${otp}</span>
       </div>
-      <p style="font-size: 14px; color: #777;">This OTP is valid for 10 minutes. Please do not share it with anyone.</p>
+      <p style="font-size: 14px; color: #777;">This OTP is valid for 1 hour. Please do not share it with anyone.</p>
       <hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />
       <p style="font-size: 12px; color: #aaa; text-align: center;">If you did not request this email, please ignore it.</p>
       </div>`,
@@ -105,7 +106,9 @@ router.post("/register", async (req, res) => {
     // Checking if email is already in use
     const existingEmail = await User.findOne({ email: email });
     if (existingEmail) {
-      return res.status(400).json({ message: "Email already in use please login" });
+      return res
+        .status(400)
+        .json({ message: "Email already in use please login" });
     }
 
     // hash the password
@@ -132,7 +135,9 @@ router.post("/register", async (req, res) => {
     });
     await sendOTPVerification(email, otp);
 
-    return res.status(200).json({message: "Created user Successfully with email otp verification sent",});
+    return res.status(200).json({
+      message: "Created user Successfully with email otp verification sent",
+    });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -172,7 +177,9 @@ router.post("/otpverification", async (req, res) => {
 
     // Send verification successful email
     sendOTPVerificationAfter(email);
-    return res.status(200).json({ message: "OTP verified successfully. User is now verified." });
+    return res
+      .status(200)
+      .json({ message: "OTP verified successfully. User is now verified." });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -181,12 +188,9 @@ router.post("/otpverification", async (req, res) => {
 // Login
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const query = username.includes("@")
-      ? { email: username }
-      : { username: username };
+    const { email, password } = req.body;
 
-    const existingUser = await User.findOne(query);
+    const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
       const correctPassword = await bcrypt.compare(
@@ -220,5 +224,66 @@ function isWithinOneHour(createdAt) {
   // Return true if the difference is less than 1 hour (3600000 ms), false otherwise
   return timeDifference < 3600000; // less than 1 hour
 }
+
+// Reset password API
+router.post("/resetPasswordRequest", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const existingEmail = await User.findOne({ email: email });
+    if (!existingEmail) {
+      return res
+        .status(400)
+        .json({ message: "Email does not exist ! Please Register" });
+    }
+
+    const otp = generateOtp();
+    const salt = await bcrypt.genSalt(10);
+    const hashedOtp = await bcrypt.hash(otp, salt);
+    const newResetPassword = await resetPassword.create({
+      email: email,
+      otp: hashedOtp,
+      createdAt: Date.now(),
+    });
+    await sendOTPVerification(email, otp);
+    return res
+      .status(200)
+      .json({ message: "Reset Password Request successful" });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Error Occured while send Reset Password Request" });
+  }
+});
+
+// API to verify the otp sent to reset Email
+router.post("/resetPasswordVerification", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    const existingEmail = await resetPassword.findOne({ email: email });
+    if (!existingEmail) {
+      return res.status(400).json({ message: "Email does not exist" });
+    }
+
+    const otpcheck = await bcrypt.compare(otp, existingEmail.otp);
+    console.log(otpcheck);
+    if (!otpcheck) {
+      return res.status(400).json({ message: "Wrong OTP" });
+    }
+
+    if (!isWithinOneHour(existingEmail.createdAt)) {
+      return res
+        .status(400)
+        .json({ message: "OTP has expired. Please request a new one." });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Reset Password verification Successful" });
+  } catch (error) {
+    return res.status(400).json({ message: "Error Occured" });
+  }
+});
 
 module.exports = router;
