@@ -89,7 +89,7 @@ const Login = () => {
               Don't have an account ? <Link to="/signup">Register</Link>
             </span>
             <span>
-              Forgot Password ? <Link to="/resetpasswordrequest">Reset</Link>
+              Forgot Password ? <Link to="/resetpassreq">Reset</Link>
             </span>
 
             <button type="submit">Login</button>

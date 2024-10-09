@@ -1,30 +1,29 @@
-import "./resetPasswordRequest.css";
+import "./resetPasswordVerification.css";
 import React, { useState, useContext } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { PasswordContext } from "../../context/resetPasswordContext";
 
-const ResetPasswordRequest = () => {
-  const [email, setEmail] = useState("");
-
+const ResetPasswordVerification = () => {
   // get the setEmail Variable from EmailContext
-  const { setEmailContextReset } = useContext(PasswordContext);
+  const { emailReset } = useContext(PasswordContext);
+  const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
-  // handleResetPasswordRequest function
-  async function handleResetPasswordRequest(e) {
+  async function handlePasswordReset(e) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/user/auth/resetPasswordRequest",
+        "http://localhost:4000/user/auth/resetPasswordVerification",
         {
-          email,
+          emailReset,
+          otp,
         }
       );
       window.alert(response.data.message);
-      navigate("/resetpasswordverification");
-      setEmailContextReset(email);
+      navigate("/resetpassword");
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -45,29 +44,30 @@ const ResetPasswordRequest = () => {
       }
     }
   }
+
   return (
-    <div className="resetPasswordRequestContainer">
-      <div className="resetPasswordRequestBox">
-        <div className="resetPasswordRequestTitle">
-          <h3>Reset Password</h3>
+    <div className="resetPasswordVerificationContainer">
+      <div className="resetPasswordVerificationBox">
+        <div className="resetPasswordVerificationTitle">
+          <h3>Reset Password Verification</h3>
         </div>
 
-        <div className="resetPasswordRequestInput">
-          <form onSubmit={handleResetPasswordRequest}>
+        <div className="resetPasswordVerificationInput">
+          <form onSubmit={handlePasswordReset}>
             <input
-              type="email"
-              placeholder="Email"
-              maxLength={50}
+              type="text"
+              placeholder="OTP"
+              maxLength={6}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setOtp(e.target.value);
               }}
             />
-            <button>Send Code</button>
+            <button>Verify</button>
           </form>
         </div>
 
         <div className="backButton">
-          <Link to="/login">
+          <Link to="/resetpassreq">
             <FaArrowLeft />
           </Link>
         </div>
@@ -76,4 +76,4 @@ const ResetPasswordRequest = () => {
   );
 };
 
-export default ResetPasswordRequest;
+export default ResetPasswordVerification;

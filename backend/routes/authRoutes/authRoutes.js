@@ -237,6 +237,23 @@ router.post("/resetPasswordRequest", async (req, res) => {
         .json({ message: "Email does not exist ! Please Register" });
     }
 
+    const existingEmail2 = await resetPassword.findOne({ email: email });
+    if (existingEmail2) {
+      await resetPassword.deleteOne({ email: email });
+      const otp = generateOtp();
+      const salt = await bcrypt.genSalt(10);
+      const hashedOtp = await bcrypt.hash(otp, salt);
+      const newResetPassword = await resetPassword.create({
+        email: email,
+        otp: hashedOtp,
+        createdAt: Date.now(),
+      });
+      await sendOTPVerification(email, otp);
+      return res.status(200).json({
+        message: "Please Check your email, OTP Resent !",
+      });
+    }
+
     const otp = generateOtp();
     const salt = await bcrypt.genSalt(10);
     const hashedOtp = await bcrypt.hash(otp, salt);
@@ -259,15 +276,14 @@ router.post("/resetPasswordRequest", async (req, res) => {
 // API to verify the otp sent to reset Email
 router.post("/resetPasswordVerification", async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const { emailReset, otp } = req.body;
 
-    const existingEmail = await resetPassword.findOne({ email: email });
+    const existingEmail = await resetPassword.findOne({ email: emailReset });
     if (!existingEmail) {
       return res.status(400).json({ message: "Email does not exist" });
     }
 
     const otpcheck = await bcrypt.compare(otp, existingEmail.otp);
-    console.log(otpcheck);
     if (!otpcheck) {
       return res.status(400).json({ message: "Wrong OTP" });
     }
@@ -278,11 +294,53 @@ router.post("/resetPasswordVerification", async (req, res) => {
         .json({ message: "OTP has expired. Please request a new one." });
     }
 
+    await resetPassword.deleteOne({ email: emailReset });
     return res
       .status(200)
       .json({ message: "Reset Password verification Successful" });
   } catch (error) {
+    console.log(error.message);
     return res.status(400).json({ message: "Error Occured" });
+  }
+});
+
+// API for resetting password
+router.put("/resetPassword", async (req, res) => {
+  const { emailReset, oldpassword, newpassword } = req.body;
+
+  try {
+    const existingEmail = await User.findOne({ email: emailReset });
+
+    if (!existingEmail) {
+      return res.status(400).json({ message: "Email does not exist" });
+    }
+
+    const passcheck = await bcrypt.compare(oldpassword, existingEmail.password);
+
+    if (!passcheck) {
+      return res.status(400).json({ message: "Wrong Password ! Try Again" });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newpassword, salt);
+
+    const passcheck2 = await bcrypt.compare(oldpassword, hashedPassword);
+    if (passcheck2) {
+      return res
+        .status(400)
+        .json({ message: "Please choose another password !" });
+    }
+
+    await User.updateOne(
+      { email: emailReset },
+      { $set: { password: hashedPassword } }
+    );
+
+    return res.status(200).json({ message: "Password Reset Successful" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({ message: "error occured" });
   }
 });
 

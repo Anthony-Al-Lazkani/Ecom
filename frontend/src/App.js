@@ -9,8 +9,9 @@ import Login from "./pages/login/Login";
 import Verification from "./pages/verification/Verification";
 import { EmailProvider } from "./context/emailContext";
 import { PasswordProvider } from "./context/resetPasswordContext";
-import ResetPasswordRequest from "./pages/resetpassword/resetPasswordRequest";
-import ResetPasswordVerification from "./pages/resetpassword/resetPasswordVerification";
+import ResetPasswordRequest from "./pages/resetpasswordreq/resetPasswordRequest";
+import ResetPasswordVerification from "./pages/resetpasswordverification/resetPasswordVerification";
+import ResetPassword from "./pages/resetpassword/resetPassword";
 
 function App() {
   return (
@@ -24,14 +25,12 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/verification" element={<Verification />} />
+              <Route path="/resetpassreq" element={<ResetPasswordRequest />} />
               <Route
-                path="/resetpasswordrequest"
-                element={<ResetPasswordRequest />}
-              />
-              <Route
-                path="/resetpasswordverification"
+                path="/resetpassver"
                 element={<ResetPasswordVerification />}
               />
+              <Route path="/resetpassword" element={<ResetPassword />} />
             </Routes>
           </PasswordProvider>
         </EmailProvider>
