@@ -8,6 +8,33 @@ const nodemailer = require("nodemailer");
 const userOTPVerification = require("../../models/userOTPVerificationModel");
 const resetPassword = require("../../models/resetPasswordModel");
 
+// function to create tokens
+function createToken(userId) {
+  return jwt.sign({ userId: userId }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+}
+
+//function to extract auth token for a user
+function extractAuthToken(authenticatedRequest) {
+  const authHeader = authenticatedRequest.headers.authorization;
+  if (authHeader && authHeader.split(" ")[0] === "Bearer") {
+    return authHeader.split(" ")[1];
+  } else {
+    return null;
+  }
+}
+
+//function to decode token for a user
+function decodeToken(token) {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded.userId;
+  } catch (error) {
+    console.log(error.message);
+    return null; // Handle invalid tokens or expired tokens
+  }
+}
 // function that generates OTP
 function generateOtp() {
   const char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -198,15 +225,20 @@ router.post("/login", async (req, res) => {
         existingUser.password
       );
       if (correctPassword) {
-        res.status(200).json({ message: "Login Successful" });
+        const token = createToken(existingUser._id);
+        return res.status(200).json({
+          message: "Login Successful",
+          token: token,
+        });
       } else {
-        res.status(400).json({ message: "Wrong Password" });
+        return res.status(400).json({ message: "Wrong Password" });
       }
     } else {
-      res.status(400).json({ message: "User does not exist" });
+      return res.status(400).json({ message: "User does not exist" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.log(error.message);
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -342,6 +374,12 @@ router.put("/resetPassword", async (req, res) => {
     console.log(error.message);
     return res.status(400).json({ message: "error occured" });
   }
+});
+
+router.post("/test", (req, res) => {
+  const token = extractAuthToken(req);
+  const userId = decodeToken(token);
+  return res.json(userId);
 });
 
 module.exports = router;

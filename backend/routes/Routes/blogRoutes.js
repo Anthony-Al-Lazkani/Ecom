@@ -72,25 +72,19 @@ router.get("/getSingleBlog/:id", async (req, res) => {
 // PUT update an existing blog
 router.put("/updateBlog/:id", async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid ID" });
     }
 
-    const response = await Blogs.findOneAndUpdate(
-      { _id: id },
-      { $set: { title: title } }
-    );
+    const response = await Blogs.findOneAndUpdate({ _id: id }, { ...req.body });
 
     if (!response) {
       return res.status(400).json({ message: "Blog not found" });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Blog Updated Successfully", response });
+    return res.status(200).json({ message: "Blog Updated Successfully" });
   } catch (error) {
     console.log(error.message);
     return res.status(400).json({ message: "Server Error" });
