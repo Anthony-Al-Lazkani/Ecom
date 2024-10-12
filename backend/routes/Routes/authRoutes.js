@@ -148,6 +148,7 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       verified: false,
     });
+    const token = createToken(user._id);
 
     const otp = generateOtp();
 
@@ -164,8 +165,10 @@ router.post("/register", async (req, res) => {
 
     return res.status(200).json({
       message: "Created user Successfully with email otp verification sent",
+      token: token,
     });
   } catch (error) {
+    console.log(error.message);
     return res.status(400).json({ error: error.message });
   }
 });
@@ -378,8 +381,11 @@ router.put("/resetPassword", async (req, res) => {
 
 router.post("/test", (req, res) => {
   const token = extractAuthToken(req);
-  const userId = decodeToken(token);
-  return res.json(userId);
+  return res.json(token);
 });
 
+router.post("/logout", (req, res) => {
+  const token = extractAuthToken(req);
+  return res.json(token);
+});
 module.exports = router;

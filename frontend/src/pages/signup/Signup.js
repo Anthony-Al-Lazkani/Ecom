@@ -60,6 +60,8 @@ const Signup = () => {
       console.log(response.data.message);
       window.alert(response.data.message); // Show success message
       setEmailContext(email);
+      localStorage.setItem("authToken", response.data.token);
+      console.log(response.data.token);
       navigate("/verification");
     } catch (error) {
       // Error handling

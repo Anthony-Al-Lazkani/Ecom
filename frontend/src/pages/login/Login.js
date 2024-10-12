@@ -32,6 +32,8 @@ const Login = () => {
       );
 
       window.alert(response.data.message);
+      console.log(response.data.token);
+      localStorage.setItem("authToken", response.data.token);
       navigate("/");
     } catch (error) {
       if (error.response) {
