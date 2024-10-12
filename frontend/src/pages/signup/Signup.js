@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { EmailContext } from "../../context/emailContext";
+import { AuthContext } from "../../context/authContext";
 
 const Signup = () => {
   // use States for credentials to save them in the DB
@@ -11,6 +12,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { setIsLoggedIn } = useContext(AuthContext);
   // get the setEmail Variable from EmailContext
   const { setEmailContext } = useContext(EmailContext);
 
@@ -54,13 +56,10 @@ const Signup = () => {
         }
       );
 
-      // If the request is successful, handle the response
-      console.log(response);
-      console.log(response.data);
-      console.log(response.data.message);
-      window.alert(response.data.message); // Show success message
+      // If the request is successful, handle the response // Show success message
       setEmailContext(email);
       localStorage.setItem("authToken", response.data.token);
+      setIsLoggedIn(response.data.token);
       console.log(response.data.token);
       navigate("/verification");
     } catch (error) {

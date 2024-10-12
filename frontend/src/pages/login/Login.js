@@ -1,13 +1,15 @@
 import "./Login.css";
-import { React, useState } from "react";
+import { React, useCallback, useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AuthContext } from "../../context/authContext";
 
 const Login = () => {
   // use States for credentials to save them in the DB
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   // This is specifically used for password visibility
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -32,8 +34,9 @@ const Login = () => {
       );
 
       window.alert(response.data.message);
-      console.log(response.data.token);
+      // console.log(response.data.token);
       localStorage.setItem("authToken", response.data.token);
+      setIsLoggedIn(response.data.token);
       navigate("/");
     } catch (error) {
       if (error.response) {

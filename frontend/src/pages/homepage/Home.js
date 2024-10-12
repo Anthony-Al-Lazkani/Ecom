@@ -2,14 +2,6 @@ import "./Home.css";
 import axios from "axios";
 
 const Home = () => {
-  async function handleClick(e) {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      window.alert("YESSSSSSS");
-    } else {
-      window.alert("NOOOO");
-    }
-  }
   return (
     <>
       <section className="firstSection">
@@ -27,12 +19,6 @@ const Home = () => {
       <section className="secondSection">
         <div className="title">
           <h1>Who are Ecom</h1>
-          <button onClick={handleClick}>PRESS HERE</button>
-          <button
-            onClick={() => {
-              localStorage.removeItem("authToken");
-            }}
-          >Logout</button>
         </div>
       </section>
     </>

@@ -4,7 +4,8 @@
   align-items: center;
   padding: 25px 5%;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  background-color: rgba(128, 128, 128, 0.3);
 }
 
 .links {
@@ -13,41 +14,41 @@
 }
 
 .links a {
-    text-decoration: none;
-    color: whitesmoke;
-    font-size: 18px;
-    align-items: center;
-    display: flex;
-    transition: .5s;
+  text-decoration: none;
+  color: whitesmoke;
+  font-size: 18px;
+  align-items: center;
+  display: flex;
+  transition: 0.5s;
 }
 
 .links a:hover {
-    color: lightskyblue;
+  color: lightskyblue;
 }
 
 .logo h3 {
-    font-size: 30px;
-    color: white;
+  font-size: 30px;
+  color: white;
 }
 
 .getStartedBtn {
-    padding: 10px 25px;
-    background: white;
-    border: none;
-    border-radius: 15px;
-    color: gray;
-    transition: .5s;
+  padding: 10px 25px;
+  background: white;
+  border: none;
+  border-radius: 15px;
+  color: gray;
+  transition: 0.5s;
 }
 
 .getStartedBtn a {
-    color: gray;
-    font-size: 16px;
+  color: gray;
+  font-size: 16px;
 }
 
 .getStartedBtn:hover {
-    background-color: lightskyblue;
+  background-color: lightskyblue;
 }
 
 .getStartedBtn a:hover {
-    color: white;
+  color: white;
 }

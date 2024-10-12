@@ -12,28 +12,34 @@ import { PasswordProvider } from "./context/resetPasswordContext";
 import ResetPasswordRequest from "./pages/resetpasswordreq/resetPasswordRequest";
 import ResetPasswordVerification from "./pages/resetpasswordverification/resetPasswordVerification";
 import ResetPassword from "./pages/resetpassword/resetPassword";
+import { AuthProvider } from "./context/authContext";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <EmailProvider>
-          <PasswordProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/verification" element={<Verification />} />
-              <Route path="/resetpassreq" element={<ResetPasswordRequest />} />
-              <Route
-                path="/resetpassver"
-                element={<ResetPasswordVerification />}
-              />
-              <Route path="/resetpassword" element={<ResetPassword />} />
-            </Routes>
-          </PasswordProvider>
-        </EmailProvider>
+        <AuthProvider>
+          <Navbar />
+          <EmailProvider>
+            <PasswordProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/verification" element={<Verification />} />
+                <Route
+                  path="/resetpassreq"
+                  element={<ResetPasswordRequest />}
+                />
+                <Route
+                  path="/resetpassver"
+                  element={<ResetPasswordVerification />}
+                />
+                <Route path="/resetpassword" element={<ResetPassword />} />
+              </Routes>
+            </PasswordProvider>
+          </EmailProvider>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
