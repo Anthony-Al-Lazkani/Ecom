@@ -1,9 +1,10 @@
 import "./Login.css";
-import { React, useCallback, useContext, useState } from "react";
+import { React, useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../context/authContext";
+import { motion } from "framer-motion";
 
 const Login = () => {
   // use States for credentials to save them in the DB
@@ -61,7 +62,13 @@ const Login = () => {
 
   return (
     <div className="loginContainer">
-      <div className="loginBox">
+      <motion.div
+        className="loginBox"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+        transition={{ duration: .5 , ease : "easeInOut" }}
+      >
         <div className="loginleftPart">
           <form className="logininputContainer" onSubmit={handleLogin}>
             <div className="logininputBox">
@@ -104,7 +111,7 @@ const Login = () => {
           <h1>Login</h1>
           <h4>Welcome to Ecom</h4>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

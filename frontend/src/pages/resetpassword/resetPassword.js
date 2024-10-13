@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { PasswordContext } from "../../context/resetPasswordContext";
+import { motion } from "framer-motion";
 
 const ResetPassword = () => {
   // This is specifically used for password visibility
@@ -76,7 +77,13 @@ const ResetPassword = () => {
   }
   return (
     <div className="resetPasswordContainer">
-      <div className="resetPasswordBox">
+      <motion.div
+        className="resetPasswordBox"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
         <div className="resetPasswordleftPart">
           <form className="resetPasswordinputContainer" onSubmit={handleReset}>
             <div className="resetPasswordinputBox">
@@ -136,7 +143,7 @@ const ResetPassword = () => {
         <div className="resetPasswordrightPart">
           <h1>Reset Password</h1>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

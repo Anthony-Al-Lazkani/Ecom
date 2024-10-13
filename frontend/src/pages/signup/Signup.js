@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { EmailContext } from "../../context/emailContext";
 import { AuthContext } from "../../context/authContext";
+import { motion } from "framer-motion";
 
 const Signup = () => {
   // use States for credentials to save them in the DB
@@ -88,7 +89,13 @@ const Signup = () => {
   }
   return (
     <div className="signupContainer">
-      <div className="signupBox">
+      <motion.div
+        className="signupBox"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+        transition={{ duration: .5 , ease : "easeInOut" }}
+      >
         <div className="leftPart">
           <h1>Sign Up</h1>
           <h4>Become a Member</h4>
@@ -155,7 +162,7 @@ const Signup = () => {
             <button type="submit">Register</button>
           </form>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

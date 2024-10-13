@@ -19,12 +19,8 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   overflow: hidden;
-  transition: 0.5s;
 }
 
-.loginBox:hover {
-  box-shadow: 1px 1px 2px 1px black;
-}
 
 .loginleftPart {
   background-color: lightskyblue;

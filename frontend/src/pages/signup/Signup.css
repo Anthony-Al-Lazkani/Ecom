@@ -19,11 +19,6 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   overflow: hidden;
-  transition: 0.5s;
-}
-
-.signupBox:hover {
-  box-shadow: 1px 1px 2px 1px black;
 }
 
 .leftPart {

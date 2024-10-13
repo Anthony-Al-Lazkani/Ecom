@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PasswordContext } from "../../context/resetPasswordContext";
+import { motion } from "framer-motion";
 
 const ResetPasswordRequest = () => {
   const [email, setEmail] = useState("");
@@ -48,7 +49,13 @@ const ResetPasswordRequest = () => {
   }
   return (
     <div className="resetPasswordRequestContainer">
-      <div className="resetPasswordRequestBox">
+      <motion.div
+        className="resetPasswordRequestBox"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
         <div className="resetPasswordRequestTitle">
           <h3>Reset Password</h3>
         </div>
@@ -72,7 +79,7 @@ const ResetPasswordRequest = () => {
             <FaArrowLeft />
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

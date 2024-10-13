@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { PasswordContext } from "../../context/resetPasswordContext";
+import { motion } from "framer-motion";
 
 const ResetPasswordVerification = () => {
   // get the setEmail Variable from EmailContext
@@ -47,7 +48,13 @@ const ResetPasswordVerification = () => {
 
   return (
     <div className="resetPasswordVerificationContainer">
-      <div className="resetPasswordVerificationBox">
+      <motion.div
+        className="resetPasswordVerificationBox"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
         <div className="resetPasswordVerificationTitle">
           <h3>Reset Password Verification</h3>
         </div>
@@ -71,7 +78,7 @@ const ResetPasswordVerification = () => {
             <FaArrowLeft />
           </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
