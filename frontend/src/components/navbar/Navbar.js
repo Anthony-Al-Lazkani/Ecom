@@ -2,12 +2,19 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useContext, useState, React } from "react";
 import { AuthContext } from "../../context/authContext";
+import { motion } from "framer-motion";
 
 function Navbar() {
   const { isLoggedIn, Logout } = useContext(AuthContext);
 
   return (
-    <nav className="NavigationBar">
+    <motion.nav
+      className="NavigationBar"
+      initial={{ y: "-100%", opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -"100%", opacity: 0 }}
+      transition={{duration : .7 , ease : "easeInOut"}}
+    >
       <div className="logo">
         <h3>Ecom</h3>
       </div>
@@ -24,7 +31,7 @@ function Navbar() {
           )}
         </button>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
 

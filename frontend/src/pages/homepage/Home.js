@@ -1,52 +1,58 @@
 import "./Home.css";
 import axios from "axios";
-import { animate, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Home = () => {
   return (
     <>
-      <section className="firstSection">
-        <motion.h1
-          initial={{ y: "15px", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: "15px", opacity: 0 }}
-          transition={{duration : 0.75 , ease : "easeInOut"}}
-        >
-          Discover Your Adventure
-        </motion.h1>
-        <motion.h3
-        initial={{opacity : 0}}
-        animate={{opacity : 1}}
-        exit={{opacity : 0}}
-        transition={{duration : .75, ease : "easeInOut"}}>
-          Unleash your spirit of exploration and find the best gear to conquer
-          the great outdoors.
-        </motion.h3>
-        <div className="buttons">
-          <motion.button
-            className="shopCollectionBtn"
-            initial={{ x: "-100%", opacity: 0 }}
+      <motion.section
+        className="firstSection"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+      >
+        <div className="gradient-overlay"></div>
+        <div className="FrontPage">
+          <motion.div
+            className="firstPart"
+            initial={{ x: "-10px", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0 }}
-            transition={{ duration: 0.75, ease: "easeInOut" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
           >
-            Shop Collection
-          </motion.button>
-          <motion.button
-            className="exploreTheWorldBtn"
-            initial={{ x: "100%", opacity: 0 }}
+            <h3>Crafted for Elegance</h3>
+            <h1>Elegance Meets Comfort</h1>
+          </motion.div>
+          <motion.div
+            className="secondPart"
+            initial={{ x: "10px", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
-            transition={{ duration: 0.75, ease: "easeInOut" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
           >
-            Explore The World
-          </motion.button>
+            <button>MORE ABOUT ECOM</button>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <section className="secondSection">
         <div className="title">
-          <h1>Who are Ecom</h1>
+          <div className="titleDesc">
+            <h1>
+              Ecom is the Top Notch modern luxury designer, ready to elevate
+              your space into perfectness
+            </h1>
+          </div>
+        </div>
+        <div className="content">
+          <div className="contentBox">
+            <div className="contents">
+              <h1>H1</h1>
+            </div>
+            <div className="contents">H2</div>
+            <div className="contents">H3</div>
+          </div>
         </div>
       </section>
     </>

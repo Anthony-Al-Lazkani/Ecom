@@ -2,10 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 5%;
+  padding: 15px 5%;
   width: 100%;
   position: fixed;
-  background-color: rgba(128, 128, 128, 0.3);
+  background-color: rgba(235, 235, 235, .9);
+  z-index: 10;
 }
 
 .links {
@@ -15,7 +16,7 @@
 
 .links a {
   text-decoration: none;
-  color: whitesmoke;
+  color: #43444b;
   font-size: 18px;
   align-items: center;
   display: flex;
@@ -23,30 +24,31 @@
 }
 
 .links a:hover {
-  color: lightskyblue;
+  color: black;
+  font-weight: 500;
 }
 
 .logo h3 {
   font-size: 30px;
-  color: white;
+  color: #000;
 }
 
 .getStartedBtn {
   padding: 10px 25px;
-  background: white;
+  background: #43444b;
   border: none;
   border-radius: 15px;
-  color: gray;
+  /* color: white; */
   transition: 0.5s;
 }
 
 .getStartedBtn a {
-  color: gray;
+  color: #fff;
   font-size: 16px;
 }
 
 .getStartedBtn:hover {
-  background-color: lightskyblue;
+  background-color: #000;
 }
 
 .getStartedBtn a:hover {
