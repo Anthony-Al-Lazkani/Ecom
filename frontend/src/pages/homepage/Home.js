@@ -48,10 +48,10 @@ const Home = () => {
         <div className="content">
           <div className="contentBox">
             <div className="contents">
-              <h1>H1</h1>
+              <h1>H11</h1>
             </div>
-            <div className="contents">H2</div>
-            <div className="contents">H3</div>
+            <div className="contents">H22</div>
+            <div className="contents">H33</div>
           </div>
         </div>
       </section>
