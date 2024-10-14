@@ -62,36 +62,91 @@
   color: #000;
 }
 .secondSection {
-  /* height: 100vh; */
+  height: 100vh;
   width: 100%;
-  display: grid;
-  grid-row: 1fr 2fr;
-}
-
-.title {
   display: flex;
-  border: 1px solid black;
-  width: 100%;
-  min-height: 35vh;
   justify-content: center;
   align-items: center;
-  display: flex;
 }
 
-.titleDesc {
-  width: 60%;
+.secondSectionContainer {
+  width: 80%;
+  height: 100%;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  gap: 30px;
+}
+
+.secondSectiontitle {
+  width: 75%;
+  margin: auto;
   text-align: center;
 }
 
-.titleDesc h1 {
+.secondSectiontitle h1 {
   font-size: 40px;
   font-weight: 250;
 }
 
-.content {
+.secondSectioncontent {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 30px;
+}
+
+.contentCard {
+  height: 350px;
+  width: 350px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 2px 2px 2px 2px rgb(230, 230, 230);
+  transition: box-shadow 0.5s ease, scale 0.5s ease, opacity 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.contentCard:hover {
+  box-shadow: 8px 8px 8px 8px rgb(230, 230, 230);
+  scale: 1.1;
+  letter-spacing: 5px;
+}
+.contentCard.card1 {
+  background-image: url("../../../public/livingroom.jpg");
+}
+
+.contentCard.card2 {
+  background-image: url("../../../public/livingroom2.jpg");
+}
+
+.contentCard.card3 {
+  background-image: url("../../../public/livingroom3.jpg");
+}
+
+.contentCardContainer {
+  display: flex;
+  text-align: center;
+}
+
+.thirdSection {
   height: 100vh;
   width: 100%;
-  display: grid;
-  border: 1px solid black;
-  grid-column: 1fr 1fr 1fr;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thirdSectionBG {
+  height: 50vh;
+  width: 100%;
+  background-image: url("../../../public/section3BG.jpg");
+  background-position: center;
+  background-size:cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
 }

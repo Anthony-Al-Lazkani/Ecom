@@ -42,7 +42,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: lightskyblue;
+  background-color: rgba(235, 235, 235, .8);;
 }
 
 .inputContainer {

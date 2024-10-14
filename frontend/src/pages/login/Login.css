@@ -23,7 +23,7 @@
 
 
 .loginleftPart {
-  background-color: lightskyblue;
+  background-color:rgba(235, 235, 235, .8);
   display: flex;
   flex-direction: column;
   justify-content: center;

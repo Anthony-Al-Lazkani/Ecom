@@ -5,7 +5,7 @@
   padding: 15px 5%;
   width: 100%;
   position: fixed;
-  background-color: rgba(235, 235, 235, .9);
+  background-color: rgba(235, 235, 235, 0.9);
   z-index: 10;
 }
 
@@ -28,9 +28,18 @@
   font-weight: 500;
 }
 
-.logo h3 {
-  font-size: 30px;
-  color: #000;
+.logo {
+  height: 60px;
+  width: 60px;
+  background-image: url("../../../public/Logo-removebg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.logo image {
+  height: 100%;
+  width:100%;
 }
 
 .getStartedBtn {
@@ -53,4 +62,39 @@
 
 .getStartedBtn a:hover {
   color: white;
+}
+
+.Drop {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.DropMenu {
+  position: absolute;
+  top: 100%;
+  text-align: center;
+  background-color: #fff;
+  justify-content: center;
+  width: 300%;
+}
+
+.DropMenu ul {
+  list-style: none;
+  text-decoration: none;
+}
+
+.DropMenu ul li {
+  padding: 5%;
+}
+
+.DropMenu ul li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.DropMenu ul li:hover {
+  background-color: rgba(235, 235, 235, 0.9);
 }
