@@ -377,6 +377,50 @@ const PasswordReset = async (req, res) => {
   }
 };
 
+// Contact Us
+const ContactUs = async (req, res) => {
+  const { email, category, description } = req.body;
+
+  try {
+    await contactEmail(
+      process.env.AUTH_EMAIL,
+      email,
+      "Voice Reached !",
+      "we'll reply as soon as possible ! Thank You"
+    );
+    await contactEmail(email, process.env.AUTH_EMAIL, category, description);
+    return res.status(200).json({ message: "Thank you for reaching out !" });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+// Send the contact form to the support team (in this case it's me)
+const contactEmail = async (from, to, category, description) => {
+  try {
+    // Nodemailer
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASSWORD,
+      },
+    });
+
+    //mail Options
+    const mailOptions = {
+      from: from,
+      to: to,
+      subject: "Contact Request",
+      html: `<h1>Title : ${category} </h1>
+            <h2>Description : ${description} </h2>`,
+    };
+
+    //Send mail with otp to the email given as props
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   createUser,
   signIn,
@@ -384,4 +428,5 @@ module.exports = {
   requestPasswordReset,
   resetPasswordVerification,
   PasswordReset,
+  ContactUs,
 };

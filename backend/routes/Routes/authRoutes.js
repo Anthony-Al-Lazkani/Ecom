@@ -7,6 +7,7 @@ const {
   requestPasswordReset,
   resetPasswordVerification,
   PasswordReset,
+  ContactUs,
 } = require("../../controllers/authControllers");
 
 // Registration
@@ -26,5 +27,8 @@ router.post("/resetPasswordVerification", resetPasswordVerification);
 
 // Resetting password
 router.put("/resetPassword", PasswordReset);
+
+// Send me the contact Form
+router.post("/contact", ContactUs);
 
 module.exports = router;

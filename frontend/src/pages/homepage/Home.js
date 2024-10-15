@@ -90,7 +90,7 @@ const Home = () => {
       </motion.section>
 
       <section className="thirdSection">
-      <div className="thirdSectionBG"></div>
+        <div className="thirdSectionBG"></div>
       </section>
     </>
   );
